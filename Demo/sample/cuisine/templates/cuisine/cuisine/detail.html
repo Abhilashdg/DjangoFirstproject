@@ -1,0 +1,11 @@
+{% extends "cuisine/base.html" %}
+{% block title %}{{ cuisine.name }}{% endblock %}
+{% block content %}
+ <h1>{{ cuisine.name }}</h1>
+ <p class="date">
+ Published {{ cuisine.publish }} by {{ cuisine.author }}
+ </p>
+ {{ cuisine.type }}, {{ cuisine.catg }}
+ {{ cuisine.desc|linebreaks }}
+ <img src="{{cuisine.pic.url}}" alt="cuisine pic"/>
+{% endblock %}
