@@ -1,0 +1,19 @@
+{% extends "cuisine/base.html" %}
+{% block title %}Cuisine App{% endblock %}
+{% block content %}
+<h1>MY CUISINE SAMPLE APPLICATION</h1>
+{% for cuisine in cuisines %}
+<h2>
+    <a href="{{ cuisine.get_absolute_url }}">
+        {{ cuisine.name }}
+    </a>
+</h2>
+<p class="date">
+    Published {{ cuisine.publish }} by {{ cuisine.author }}
+</p>
+{{ cuisine.type }}, {{ cuisine.catg }}
+{{ cuisine.desc|truncatewords:30|linebreaks }}
+{% endfor %}
+<br><hr><br>
+{% include "pagination.html" with page=cuisines %}
+{% endblock %}
