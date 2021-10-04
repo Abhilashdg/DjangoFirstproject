@@ -1,0 +1,43 @@
+{% extends "cuisine/base.html" %}
+{% block title %}{{ cuisine.name }}{% endblock %}
+{% block content %}
+ <h1>{{ cuisine.name }}</h1>
+ <p class="date">
+ Published {{ cuisine.publish }} by {{ cuisine.author }}
+ </p>
+ {{ cuisine.type }}, {{ cuisine.catg }}
+ {{ cuisine.desc|linebreaks }}
+ <img src="{{cuisine.pic.url}}" alt="cuisine pic"/>
+<p><a href="{% url 'cuisine:cuisine_share' cuisine.id %}">
+ Share this Cuisine if you love it to promote it.</a>
+ </p>
+ <br><hr><br>
+ {% with comments.count as total_comments %}
+ <h2>
+ {{ total_comments }} comment{{ total_comments|pluralize }}
+ </h2>
+ {% endwith %}
+
+ {% for comment in comments %}
+ <div class="comment">
+ <p class="info" style="color:red;">
+ Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created }}
+ </p>
+ {{ comment.body|linebreaks }}
+ </div>
+ {% empty %}
+ <p>There are no comments yet.</p>
+ {% endfor %}
+ {% if commented %}
+ <h2>Your comment has been added.</h2>
+ {% else %}
+ <br><hr><br>
+ <h2>Add a new comment</h2>
+ <form action="." method="post">
+ {{ comment_form.as_p }}
+ {% csrf_token %}
+ <p><input type="submit" value="Add comment"></p>
+ </form>
+ {% endif %}
+
+{% endblock %}
